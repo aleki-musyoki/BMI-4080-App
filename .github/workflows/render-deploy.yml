@@ -18,7 +18,7 @@ jobs:
       with:
         render-token: ${{secrets.RENDER_API_KEY}}
         github-token: ${{secrets.ACC_API_KEY}} # This is github token
-        service-id: "srv-cg90ltg2qv259v98u1kg"
+        service-id: "srv-cgcb8s02qv267uccbne0"
         retries: 20
         wait: 16000
         sleep: 30000
