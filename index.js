@@ -19,6 +19,9 @@ app.use(express.static('public'));
 app.get('/contacts', function (request, response){
     response.render('contact-us');
 });
+app.get('/', function (request, response){
+    response.render('bmi');
+});
 
 app.get('/bmi', function (request, response){
     response.render('bmi');
