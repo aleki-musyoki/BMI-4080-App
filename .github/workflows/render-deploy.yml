@@ -29,4 +29,5 @@ jobs:
         retries: 20
         wait: 16000
         sleep: 30000
+    - run: npm install
     - run: npm test
