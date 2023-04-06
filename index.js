@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
-const urlEncodedParser = bodyParser.urlencoded({extended: false});
+const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 const jsonParser = express.json();
 const fs = require('fs');
 const { response } = require('express');
@@ -16,15 +16,15 @@ app.set('views', 'views');
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 
-app.get('/contacts', function (request, response){
+app.get('/contacts', function (request, response) {
     response.render('contact-us');
 });
 
-app.get('/bmi', function (request, response){
+app.get('/bmi', function (request, response) {
     response.render('bmi');
 });
 
-app.get('/reports', (request, response)=>{
+app.get('/reports', (request, response) => {
     response.render('reports')
 })
 
@@ -37,30 +37,38 @@ app.post('/process-contacts', urlEncodedParser, (request, response) => {
     response.end('Thank you ' + request.body.first_name + ' ' + request.body.last_name);
 });
 
-app.post('/calculate-bmi', urlEncodedParser, jsonParser, (request, response) => {
-    var bmi = request.body.weight / (request.body.height * request.body.height);
+function calculateBMI(height, weight) {
+    var bmi = weight / (height * height);
     var status = '';
-    if(bmi < 18.5){
+    if (bmi < 18.5) {
         status = 'underweight';
-    }else if(bmi >= 18.5 && bmi < 25){
+    } else if (bmi >= 18.5 && bmi < 25) {
         status = 'normal'
-    }else if(bmi >= 25  && bmi < 30){
+    } else if (bmi >= 25 && bmi < 30) {
         status = 'overweight'
-    }else{
+    } else {
         status = 'obese'
     }
-    const info = {
-        height: request.body.height,
-        weight: request.body.weight,
+
+    const data = {
+        height: height,
+        weight: weight,
         bmi: bmi,
         status: status
     }
+    return status;
+}
+
+app.post('/calculate-bmi', urlEncodedParser, jsonParser, (request, response) => {
+
+    const info = calculateBMI(request.body.height, request.body.weight);
 
     bmiData.push(info);
-    
+
     fs.writeFileSync(fileName, JSON.stringify(bmiData, null, 2));
-    response.render('individual', {bmi: bmi, status: status});
+    response.render('individual', { bmi: bmi, status: status });
 });
 
 app.listen(port);
 console.log('Server listening on port 3000');
+module.exports = { calculateBMI };

@@ -40,5 +40,17 @@
     "weight": "90",
     "bmi": 27.777777777777775,
     "status": "overweight"
+  },
+  {
+    "height": "1.8",
+    "weight": "100",
+    "bmi": 30.864197530864196,
+    "status": "obese"
+  },
+  {
+    "height": "1.8",
+    "weight": "80",
+    "bmi": 24.691358024691358,
+    "status": "normal"
   }
 ]

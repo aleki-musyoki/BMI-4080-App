@@ -10,7 +10,6 @@ async function fetchData() {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log(data);
         buildReportsTable(data);
         calculateTotalAverage(data);
     } catch (error) {
@@ -37,12 +36,13 @@ function buildReportsTable(data) {
         row.appendChild(weight);
         row.appendChild(bmi);
         row.appendChild(status);
-        row.addClassList('row');
 
         return row;
     })
 
-    bodyRows.forEach(row => table.appendChild(row));
+    bodyRows.forEach(row => {
+        table.appendChild(row)
+    });
 }
 
 function calculateTotalAverage(data) {
@@ -69,8 +69,6 @@ function calculateTotalAverage(data) {
     }else{
         status = 'obese'
     }
-
-    console.log(average)
 
     paragraph.append(average);
     statusStage.append(status);
